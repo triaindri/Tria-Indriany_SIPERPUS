@@ -12,26 +12,14 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
-                    {{-- @hasrole('mahasiswa')
-                        <x-nav-link :href="route('book')" :active="request()->routeIs('book')">
-                            {{ __('List Buku') }}
-                        </x-nav-link>
-                    @endhasrole --}}
-
-                    {{-- @hasrole('pustakawan')
-                        <x-nav-link :href="route('book')" :active="request()->routeIs('book') || request()->routeIs('book.create')">
-                            {{ __('Book') }}
-                        </x-nav-link>
-                    @endhasrole --}}
-
-
-                    {{-- <x-nav-link :href="route('book')" :active="request()->routeIs('book') || request()->routeIs('book.create')">
-                        {{ __('Book') }}
-                    </x-nav-link> --}}
+                    <x-nav-link :href="route('book')" :active="request()->routeIs('book')">
+                        {{ __('List Buku') }}
+                    </x-nav-link>
                 </div>
             </div>
 
