@@ -13,12 +13,10 @@ class BookController extends Controller
         $data['books'] = Book::with('bookshelf')->get();
         return view('books.index', $data);
     }
-
     public function create(){
         $data['bookshelves'] = Bookshelf::pluck('name','id');
         return view('books.create', $data);
     }
-
     public function store(Request $request){
         $validated = $request->validate([
             'title' => 'required|max:255',
@@ -47,7 +45,6 @@ class BookController extends Controller
             return redirect()->route('book.create')->with($notification);
         }
     }
-
     public function edit(string $id){
         $data['book'] = Book::findOrFail($id);
         $data['bookshelves'] = Bookshelf::pluck('name','id');
@@ -61,7 +58,6 @@ class BookController extends Controller
             'year' => 'required|integer|max:2077',
             'publisher' => 'required|max:255',
             'city' => 'required|max:50',
-            'cover' => 'required|max:255',
             'bookshelf_id' => 'required',
         ]);
         if ($request->hasFile('cover')) { 
@@ -78,6 +74,18 @@ class BookController extends Controller
         $notification =  array( 
             'message' => 'Data buku berhasil ditambahkan', 
             'alert-type' => 'success' 
+        );
+        return redirect()->route('book')->with($notification);
+    }
+    public function destroy(string $id){
+        $book = Book::findOrFail($id);
+        if($book->cover != null){ 
+            Storage::delete('public/cover_buku/'.$book->cover);
+        }
+        $book->delete();
+        $notification =  array( 
+            'message' => 'Data buku berhasil dihapus', 
+            'alert-type' => 'success'
         );
         return redirect()->route('book')->with($notification);
     }
